@@ -31,7 +31,7 @@ class Kopiorapido < Formula
   depends_on :macos => :big_sur if OS.mac?
 
   def install
-    bin.install "KopioRapido.CLI" => "kopiorapido"
+    bin.install "kopiorapido"
   end
 
   test do
