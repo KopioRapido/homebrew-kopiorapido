@@ -1,6 +1,6 @@
 cask "kopiorapido-gui" do
-  version "2026.02.06"
-  sha256 "66c7fab443c9a3abf5aa056221d3c124cdcebfad7fb9a9fa29a59ab36b26fb87"
+  version "2026.02.15"
+  sha256 "b225d17ff7ba4c3d9ce760d65992d4b6cbff8ccd920ed3a79bc304b77495227e"
 
   url "https://releases.kopiorapido.com/#{version}/gui/kopiorapido-gui-macos-#{version}.dmg"
   name "KopioRapido"
