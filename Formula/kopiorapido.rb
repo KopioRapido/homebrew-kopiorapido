@@ -31,7 +31,11 @@ class Kopiorapido < Formula
   depends_on :macos => :big_sur if OS.mac?
 
   def install
-    bin.install "kopiorapido"
+    # Install all files to libexec to keep them together
+    libexec.install Dir["*"]
+
+    # Create wrapper script in bin that runs from libexec
+    (bin/"kopiorapido").write_env_script libexec/"kopiorapido", {}
   end
 
   test do
