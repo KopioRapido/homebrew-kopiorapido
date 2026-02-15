@@ -1,0 +1,93 @@
+name: Update Homebrew Formulae
+
+on:
+  repository_dispatch:
+    types: [new-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update to (e.g., 2026.02.06)'
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fetch SHA256 checksums
+        id: checksums
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          BASE_URL="https://releases.kopiorapido.com/${VERSION}"
+          
+          # Fetch all checksums
+          OSX_ARM64_SHA=$(curl -sL ${BASE_URL}/cli/kopiorapido-cli-osx-arm64-${VERSION}.tar.gz.sha256 | awk '{print $1}')
+          OSX_X64_SHA=$(curl -sL ${BASE_URL}/cli/kopiorapido-cli-osx-x64-${VERSION}.tar.gz.sha256 | awk '{print $1}')
+          LINUX_ARM64_SHA=$(curl -sL ${BASE_URL}/cli/kopiorapido-cli-linux-arm64-${VERSION}.tar.gz.sha256 | awk '{print $1}')
+          LINUX_X64_SHA=$(curl -sL ${BASE_URL}/cli/kopiorapido-cli-linux-x64-${VERSION}.tar.gz.sha256 | awk '{print $1}')
+          GUI_SHA=$(curl -sL ${BASE_URL}/gui/kopiorapido-gui-macos-${VERSION}.dmg.sha256 | awk '{print $1}')
+          
+          echo "OSX_ARM64_SHA=${OSX_ARM64_SHA}" >> $GITHUB_OUTPUT
+          echo "OSX_X64_SHA=${OSX_X64_SHA}" >> $GITHUB_OUTPUT
+          echo "LINUX_ARM64_SHA=${LINUX_ARM64_SHA}" >> $GITHUB_OUTPUT
+          echo "LINUX_X64_SHA=${LINUX_X64_SHA}" >> $GITHUB_OUTPUT
+          echo "GUI_SHA=${GUI_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Update CLI Formula
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          
+          # Update version
+          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/kopiorapido.rb
+          
+          # Update URLs
+          sed -i "s|https://releases.kopiorapido.com/.*/cli/kopiorapido-cli-osx-arm64-.*\.tar\.gz|https://releases.kopiorapido.com/${VERSION}/cli/kopiorapido-cli-osx-arm64-${VERSION}.tar.gz|" Formula/kopiorapido.rb
+          sed -i "s|https://releases.kopiorapido.com/.*/cli/kopiorapido-cli-osx-x64-.*\.tar\.gz|https://releases.kopiorapido.com/${VERSION}/cli/kopiorapido-cli-osx-x64-${VERSION}.tar.gz|" Formula/kopiorapido.rb
+          sed -i "s|https://releases.kopiorapido.com/.*/cli/kopiorapido-cli-linux-arm64-.*\.tar\.gz|https://releases.kopiorapido.com/${VERSION}/cli/kopiorapido-cli-linux-arm64-${VERSION}.tar.gz|" Formula/kopiorapido.rb
+          sed -i "s|https://releases.kopiorapido.com/.*/cli/kopiorapido-cli-linux-x64-.*\.tar\.gz|https://releases.kopiorapido.com/${VERSION}/cli/kopiorapido-cli-linux-x64-${VERSION}.tar.gz|" Formula/kopiorapido.rb
+          
+          # Update SHA256 checksums (find the sha256 line after each URL)
+          awk -v arm64="${{ steps.checksums.outputs.OSX_ARM64_SHA }}" -v x64="${{ steps.checksums.outputs.OSX_X64_SHA }}" -v larm64="${{ steps.checksums.outputs.LINUX_ARM64_SHA }}" -v lx64="${{ steps.checksums.outputs.LINUX_X64_SHA }}" '
+          /on_arm/ { arm_block=1 }
+          /on_intel/ { arm_block=0; intel_block=1 }
+          /on_linux/ { macos_block=0; linux_block=1; arm_block=0; intel_block=0 }
+          /on_macos/ { macos_block=1; linux_block=0 }
+          /sha256/ { 
+            if (macos_block && arm_block) { print "      sha256 \"" arm64 "\""; next }
+            if (macos_block && intel_block) { print "      sha256 \"" x64 "\""; next }
+            if (linux_block && arm_block) { print "      sha256 \"" larm64 "\""; next }
+            if (linux_block && intel_block) { print "      sha256 \"" lx64 "\""; next }
+          }
+          { print }
+          ' Formula/kopiorapido.rb > Formula/kopiorapido.rb.tmp
+          mv Formula/kopiorapido.rb.tmp Formula/kopiorapido.rb
+
+      - name: Update GUI Cask
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          
+          # Update version and SHA256
+          sed -i "s/version \".*\"/version \"${VERSION}\"/" Casks/kopiorapido-gui.rb
+          sed -i "s/sha256 \".*\"/sha256 \"${{ steps.checksums.outputs.GUI_SHA }}\"/" Casks/kopiorapido-gui.rb
+
+      - name: Commit and push
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add Formula/kopiorapido.rb Casks/kopiorapido-gui.rb
+          git commit -m "chore: update to v${VERSION}"
+          git push
