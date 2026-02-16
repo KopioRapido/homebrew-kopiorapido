@@ -7,24 +7,24 @@ class Kopiorapido < Formula
   on_macos do
     on_arm do
       url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-osx-arm64-2026.02.15.tar.gz"
-      sha256 "d06051f5ca1fb995c5afe941a98b40040ae3524bba6686b9f5e0779b10a51e74"
+      sha256 "9f3e1c8812dbcdcab2edb7915c9d3f8ef01032513cc5d1a22073a938dfa8c04a"
     end
 
     on_intel do
       url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-osx-x64-2026.02.15.tar.gz"
-      sha256 "e55f12479d138f87f9065533478f7343cd66eff8e0a0dcfd52929163aeb8317e"
+      sha256 "06b8cc0bb6bc97fe8b3115784ba5f4ae5cacd337d85248a91ccf8cb73c81f01e"
     end
   end
 
   on_linux do
     on_arm do
       url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-linux-arm64-2026.02.15.tar.gz"
-      sha256 "c97f7b7bd0dea2fad88ec51ef78b4a2a8003538abd8bbc98e85e2894d8745c30"
+      sha256 "6c02d7eb8d33e1eac867cf60a81892a392552c24bd6587ec258888338acf05aa"
     end
 
     on_intel do
       url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-linux-x64-2026.02.15.tar.gz"
-      sha256 "d9f2edfc4d141bcc3057cf3fe22be67aa432eab41618fb625f3158bf7924a456"
+      sha256 "24b7aca968c6a592f2e5c0f20d9ab579864cdecfe53419938bea1f7dd63c2cc7"
     end
   end
 
