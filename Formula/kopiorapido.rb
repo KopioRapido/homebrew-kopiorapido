@@ -1,30 +1,30 @@
 class Kopiorapido < Formula
   desc "Intelligent file copying with delta sync, compression, and hardware acceleration"
   homepage "https://kopiorapido.com"
-  version "2026.02.15"
+  version "2026.07.04"
   license "Proprietary"
 
   on_macos do
     on_arm do
-      url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-osx-arm64-2026.02.15.tar.gz"
-      sha256 "9f3e1c8812dbcdcab2edb7915c9d3f8ef01032513cc5d1a22073a938dfa8c04a"
+      url "https://releases.kopiorapido.com/2026.07.04/cli/kopiorapido-cli-osx-arm64-2026.07.04.tar.gz"
+      sha256 "2a955d3989f4ab60e6e5c47c6ea7605a66a61d7700d8841792410fad8ab41f4d"
     end
 
     on_intel do
-      url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-osx-x64-2026.02.15.tar.gz"
-      sha256 "06b8cc0bb6bc97fe8b3115784ba5f4ae5cacd337d85248a91ccf8cb73c81f01e"
+      url "https://releases.kopiorapido.com/2026.07.04/cli/kopiorapido-cli-osx-x64-2026.07.04.tar.gz"
+      sha256 "cf75abaa43f84fc253cf4e4f6deeb2484cdc904bd99add95e2f733b1bbaebbfd"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-linux-arm64-2026.02.15.tar.gz"
-      sha256 "6c02d7eb8d33e1eac867cf60a81892a392552c24bd6587ec258888338acf05aa"
+      url "https://releases.kopiorapido.com/2026.07.04/cli/kopiorapido-cli-linux-arm64-2026.07.04.tar.gz"
+      sha256 "dcdd0c02e697d4fd923345c994e7314f083dcf23cc7561e2e22cd8ff1cc50ed3"
     end
 
     on_intel do
-      url "https://releases.kopiorapido.com/2026.02.15/cli/kopiorapido-cli-linux-x64-2026.02.15.tar.gz"
-      sha256 "24b7aca968c6a592f2e5c0f20d9ab579864cdecfe53419938bea1f7dd63c2cc7"
+      url "https://releases.kopiorapido.com/2026.07.04/cli/kopiorapido-cli-linux-x64-2026.07.04.tar.gz"
+      sha256 "b91e149613cc08205336ae658900936461c81cc13e3857fefbcff220fea34516"
     end
   end
 
