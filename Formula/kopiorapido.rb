@@ -36,9 +36,13 @@ class Kopiorapido < Formula
 
     # Create wrapper script in bin that runs from libexec
     (bin/"kopiorapido").write_env_script libexec/"kopiorapido", {}
+
+    # Create kp alias symlink
+    bin.install_symlink libexec/"kopiorapido" => "kp"
   end
 
   test do
     system "#{bin}/kopiorapido", "--version"
+    system "#{bin}/kp", "--version"
   end
 end
