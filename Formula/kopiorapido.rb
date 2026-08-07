@@ -1,9 +1,5 @@
 # Homebrew formula for KopioRapido CLI
 # To use: brew tap KopioRapido/kopiorapido && brew install kopiorapido
-#
-# Download URLs: https://releases.kopiorapido.com/
-# Note: SHA256 values are updated by release.yml workflow auto-update.
-#       To update manually: download artifacts, run `shasum -a 256 <file>`, replace placeholders.
 
 class Kopiorapido < Formula
   desc "High-performance cross-platform file copying with delta sync and intelligent transfer"
@@ -25,41 +21,22 @@ class Kopiorapido < Formula
   on_linux do
     on_arm do
       url "https://releases.kopiorapido.com/2026.08.01/cli/kopiorapido-cli-linux-arm64-2026.08.01.tar.gz"
-      sha256 "f8235082df3e9631307de2a7dc4967f9d5833a5d930187f8343e10a254c3fa9a"  # update on release
+      sha256 "f8235082df3e9631307de2a7dc4967f9d5833a5d930187f8343e10a254c3fa9a"
     end
     on_intel do
       url "https://releases.kopiorapido.com/2026.08.01/cli/kopiorapido-cli-linux-x64-2026.08.01.tar.gz"
-      sha256 "70fdf1ea25758ffd1ae4337df380051bd893ed76bb66bd009927b3609f56653e"  # update on release
+      sha256 "70fdf1ea25758ffd1ae4337df380051bd893ed76bb66bd009927b3609f56653e"
     end
   end
 
   def install
-     # Extract kp binary from archive
-     cache.download
-     tarball = Dir.glob("*.tar.gz").first
-     system "tar", "xzf", tarball
-     bin.install "kp"
-     # Create kopiorapido symlink so both 'kp' and 'kopiorapido' work
-     bin.install_symlink "kp" => "kopiorapido"
-   end
-
-  def caveats
-    <<~EOS
-      KopioRapido CLI has been installed!
-
-      Quick start:
-        kp copy /source /destination
-        kp --help
-
-      For shell completion:
-        kp completion bash >> ~/.bashrc
-        kp completion zsh > ~/.zsh/completion/_kp
-
-      Documentation: https://kopiorapido.com
-    EOS
+    libexec.install Dir["*"]
+    bin.install_symlink libexec/"kp" => "kp"
+    bin.install_symlink libexec/"kp" => "kopiorapido"
   end
 
   test do
-     assert_match "KopioRapido", shell_output("#{bin}/kp --version")
-   end
+    assert_match "KopioRapido", shell_output("#{bin}/kp --version")
+    assert_match "KopioRapido", shell_output("#{bin}/kopiorapido --version")
+  end
 end
