@@ -14,11 +14,11 @@ class Kopiorapido < Formula
   on_macos do
     on_arm do
       url "https://releases.kopiorapido.com/2026.08.01/cli/kopiorapido-cli-osx-arm64-2026.08.01.tar.gz"
-      sha256 "b4e3c0f7a5d8e9f2c1b6a3d7e9f1c2b5a8d6e4f3c7b9a1d5e8f2c4b6a9d3e7f1"  # update on release
+      sha256 "cc387eff6e3a00e68ec6316999ab39ef0e97ad1f1f47024fc9346838695f5fe3"
     end
     on_intel do
       url "https://releases.kopiorapido.com/2026.08.01/cli/kopiorapido-cli-osx-x64-2026.08.01.tar.gz"
-      sha256 "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"  # update on release
+      sha256 "c94857b26b21bc84ca83427559cdae139ffc84abb3eaa6a7315473b3fdbc56de"
     end
   end
 
