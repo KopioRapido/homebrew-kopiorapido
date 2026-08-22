@@ -5,27 +5,27 @@ class Kopiorapido < Formula
   desc "High-performance cross-platform file copying with delta sync and intelligent transfer"
   homepage "https://kopiorapido.com"
   license "Shareware"
-  version "2026.08.22"
+  version "2026.08.22.1"
 
   on_macos do
     on_arm do
-      url "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-osx-arm64-2026.08.22.tar.gz?v=2"
-      sha256 "72c88d977cd37219ca395c89711de0ad274a8ebeb91c325a449a207b7d3c4e31"
+      url "https://releases.kopiorapido.com/2026.08.22.1/cli/kopiorapido-cli-osx-arm64-2026.08.22.1.tar.gz?v=2"
+      sha256 "85bb42e7ef96522413e5ce08d602fd04e3b00e31b7639bbbe4070e0af5bd2959"
     end
     on_intel do
-      url "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-osx-x64-2026.08.22.tar.gz?v=2"
-      sha256 "4522870c26970045c715c387b792081338e376a7ba3d8fe2a2c5ed6d4a16af6e"
+      url "https://releases.kopiorapido.com/2026.08.22.1/cli/kopiorapido-cli-osx-x64-2026.08.22.1.tar.gz?v=2"
+      sha256 "e376fae2de5f460d91af1a1af28a1c8ccb245754b56421b05ab4ea1ea90da5a4"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-linux-arm64-2026.08.22.tar.gz?v=2"
-      sha256 "12bb00e53f88d4ea1d2d65219764d707f793554ebb83c8c444ac30fc89cb753d"
+      url "https://releases.kopiorapido.com/2026.08.22.1/cli/kopiorapido-cli-linux-arm64-2026.08.22.1.tar.gz?v=2"
+      sha256 "b7017b912c0a9e7bc142489a3418b5c37c239683762d7ee315eed3d52b2436f3"
     end
     on_intel do
-      url "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-linux-x64-2026.08.22.tar.gz?v=2"
-      sha256 "9712d7afb15c2272c78d476efbfb3014046d955c2d7d72f2a6c68e36ff11c02a"
+      url "https://releases.kopiorapido.com/2026.08.22.1/cli/kopiorapido-cli-linux-x64-2026.08.22.1.tar.gz?v=2"
+      sha256 "7b47342368da2364f0ddde7f449f01b3bb4f859e61ab25ee9ce998a9ff8e81f6"
     end
   end
 
